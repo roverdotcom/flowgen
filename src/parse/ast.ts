@@ -103,9 +103,11 @@ export const stripDetailsFromTree = (root: RawNode): any => {
         root[key].pos = val.pos;
         // @ts-expect-error todo(flow->ts)
         root[key].end = val.end;
-        root[key].assertHasRealPosition = root.assertHasRealPosition.bind(val);
-        root[key].getStart = root.getStart.bind(val);
-        root[key].getEnd = root.getEnd.bind(val);
+        root[key].assertHasRealPosition = root.assertHasRealPosition
+          ? root.assertHasRealPosition.bind(val)
+          : () => {};
+        root[key].getStart = root.getStart ? root.getStart.bind(val) : () => 0;
+        root[key].getEnd = root.getEnd ? root.getEnd.bind(val) : () => 0;
       } else {
         root[key][inspect] = inspectFn.bind(val);
       }
