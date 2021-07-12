@@ -48,7 +48,7 @@ export function error(node: any, message: ErrorMessage): void {
     console.log(
       chalk.red.bold(
         `Error ${"-".repeat(
-          process.stdout.columns - 7 - fileName.length - position.length,
+          Math.max(process.stdout.columns - 7 - fileName.length - position.length, 0) || 0
         )} ${fileName}${position}`,
       ),
     );
